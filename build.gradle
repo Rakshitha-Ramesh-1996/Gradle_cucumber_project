@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'io.cucumber:cucumber-java:7.14.0'
+    testImplementation 'io.cucumber:cucumber-junit:7.14.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
+    // https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager
+    implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '5.9.2'
+// https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.27.0'
+    implementation 'org.apache.poi:poi:5.2.3'              // For working with XLS files (HSSF)
+    implementation 'org.apache.poi:poi-ooxml:5.2.3'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.8.0'
+    implementation 'org.springframework:spring-context:5.3.25'
+
+}
+
+test {
+    useJUnitPlatform()
+}
