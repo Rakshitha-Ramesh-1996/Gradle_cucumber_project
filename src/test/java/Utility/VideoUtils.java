@@ -17,8 +17,12 @@ public class VideoUtils {
             Files.createDirectories(Paths.get(videoPath).getParent());
 
             // Run FFmpeg command to capture the screen
-            String command = "ffmpeg -video_size 1920x1080 -framerate 30 -f x11grab -i :0.0 " + videoPath;
-            ffmpegProcess = Runtime.getRuntime().exec(command);
+            String command = "ffmpeg -f avfoundation -framerate 30 -video_size 1920x1080 -i 1 " + videoPath;
+
+            // Using ProcessBuilder instead of Runtime.exec()
+            ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
+            processBuilder.redirectErrorStream(true);  // Redirect error stream to stdout
+            ffmpegProcess = processBuilder.start();
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Error starting the screen recording.");
