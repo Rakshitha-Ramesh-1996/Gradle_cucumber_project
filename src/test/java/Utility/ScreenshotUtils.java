@@ -7,6 +7,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 public class ScreenshotUtils {
@@ -22,8 +23,10 @@ public class ScreenshotUtils {
             // Copy the screenshot to the destination file
             FileUtils.copyFile(screenshot, destFile);
 
-            // Attach the screenshot to the Allure report using the file path as a String
-            Allure.addAttachment(testName + " Screenshot", "image/png", destFile.getAbsolutePath());
+            // Attach the screenshot to the Allure report using the FileInputStream
+            try (FileInputStream fis = new FileInputStream(destFile)) {
+                Allure.addAttachment(testName + " Screenshot", "image/png", fis, "png");
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
