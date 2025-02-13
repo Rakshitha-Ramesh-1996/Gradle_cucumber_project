@@ -19,6 +19,10 @@ dependencies {
     testImplementation 'io.cucumber:cucumber-java:7.14.0'
     testImplementation 'io.cucumber:cucumber-junit:7.14.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'  // JUnit 5 API
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'  // JUnit 5 Engine
+    testImplementation 'org.junit.platform:junit-platform-suite-api:1.8.2'  // Suite API
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.8.2'  //
     implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '5.9.2'
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.27.0'
     implementation 'org.apache.poi:poi:5.2.3'
@@ -28,30 +32,39 @@ dependencies {
     implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
     implementation group: 'log4j', name: 'log4j', version: '1.2.17'
     implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.24.3'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'io.cucumber:cucumber-junit-platform-engine:7.14.0'
+    testImplementation 'io.qameta.allure:allure-cucumber7-jvm:2.17.3'
+
 
     // Allure dependencies
-    testImplementation 'io.qameta.allure:allure-java-commons:2.12.0' // Ensure version consistency
-    testImplementation 'io.qameta.allure:allure-cucumber5:2.12.0'  // If using Cucumber
-    testImplementation 'io.qameta.allure:allure-cucumber6-jvm:2.12.0' // If using Cucumber 6
+//    testImplementation 'io.qameta.allure:allure-cucumber6-jvm:2.12.0' // If using Cucumber 6
 
+    testImplementation 'io.qameta.allure:allure-java-commons:2.13.9'  // Core Allure dependencies
+    testImplementation 'io.qameta.allure:allure-cucumber6-jvm:2.13.9'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3' // JUnit 5 support
+    testImplementation 'io.cucumber:cucumber-java:7.14.0' // Cucumber Java support
 }
 
 test {
-    useJUnitPlatform()
+    useJUnitPlatform()  // Make sure to use JUnit Platform for tests
+    include '**/TestRunner.class'  // Include your TestRunner class explicitly
 }
+
 
 // Tasks to generate Allure Report
-task allureReport(type: io.qameta.allure.gradle.task.AllureReport) {
-    dependsOn test
-}
+//tasks.register("allureReport", Class.forName("io.qameta.allure.gradle.task.AllureReport")) {
+//    dependsOn test
+//}
+//
+//tasks.register("allureServe", Class.forName("io.qameta.allure.gradle.task.AllureServe")) {
+//    dependsOn tasks.named("allureReport")
+//}
 
-task allureServe(type: io.qameta.allure.gradle.task.AllureServe) {
-    dependsOn allureReport
-}
 
-// Allure configuration block
-allure {
-    version = '2.12.0' // Ensure this matches the plugin version
-    autoconfigure = true
-    aspectj = true
-}
+
+//allure {
+//    version = '2.13.9'
+//    autoconfigure = true
+//    aspectj = true
+//}
